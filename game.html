@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression Game</title>
+    <link rel="stylesheet" href="introduction.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script> 
+</head>
+<body>
+    <div class="container">
+        <h1 id="phaseTitle">Daten sammeln</h1>
+        <hr/>
+        <div id="controls">
+            <p id="message">
+                Der lineare Regressionsalgorithmus benötigt gekennzeichnete Daten von früheren Studierenden, um daraus ein Modell zu lernen.
+                <br/>
+                João führte eine Umfrage durch und erfasste die Anzahl der Stunden, die die Studierenden im letzten Semester gelernt haben (unser Merkmal), und die entsprechenden richtigen Antworten (unsere Beschriftung).
+            </p>
+            <br>
+            <button class="button" id="collectDataBtn">Daten sammeln</button>
+        </div>
+        <div id="predictions"></div>
+        <br>
+        <canvas id="canvas" width="800" height="600"></canvas>
+        <div id="progressBars" class="progress-bar-container"></div> 
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

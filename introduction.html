@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction</title>
+    <link rel="stylesheet" href="introduction.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="slider-container">
+            <!-- Slide 1 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h1>
+                        Hallo! 
+                    </h1>
+                    <h2>
+                        Ich bin João, ein Bachelor-Student.                  
+                    </h2>
+                    <br>
+                    <h2>
+                        Ich habe mich damit schwer getan, zu entscheiden, wie viele Stunden ich durchschnittlich pro Woche lernen sollte, um bei meiner Abschlussprüfung in Mathematik am Ende des Semesters eine hohe Anzahl richtiger Antworten zu haben.
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h2>
+                        Wie können wir João helfen?
+                        <br>„Daten von früheren Studierenden sammeln und ein Modell erstellen, das die Anzahl der richtigen Antworten basierend auf der Anzahl der Lernstunden vorhersagen kann.“
+                    </h2>
+                    <form id="quiz-form-2">
+                        <label>
+                            <input type="radio" name="answer" value="A">
+                            A) Wahr
+                        </label><br>
+                        <label>
+                            <input type="radio" name="answer" value="B">
+                            B) Falsch
+                        </label><br>
+                        <!--<label>
+                            <input type="radio" name="answer" value="C">
+                            C) João vorschlagen, häufig Pausen einzulegen und mehr Zeit mit Hobbys zu verbringen, anstatt zu lernen.
+                        </label><br>-->
+                        <br>
+                        <button class="button" type="button" onclick="checkAnswerSlide2()">Senden</button>
+                    </form>
+                    <br>
+                    <p id="feedback-2" style="display:none;"></p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <p>
+                        Super!
+                    </p>
+                    <br>
+                    <p>
+                        Ich werde also einige Studierende aus früheren Semestern befragen, wie viele Stunden sie im Durchschnitt pro Woche im Semester gelernt haben und wie viele richtige Antworten sie im Abschlusstest hatten.
+                        <br>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <div class="text-section">
+                    <h2>
+                        Hier sind einige Ergebnisse meiner Befragung. Ich habe die gesammelten Daten in folgendem Tabellenformat organisiert:
+                    </h2>
+                </div>
+                <div class="image-section">
+                    <img src="Dataset.svg" alt="Student Dataset" style="width: 400px; height: auto;">
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h2>Unser Ziel ist es, ein Modell zu erstellen, das die Anzahl der richtigen Antworten in Abhängigkeit von den investierten Lernstunden vorhersagen kann.
+                            <br> Was ist hier das zentrale Merkmal?     
+                    </h2>
+                    <form id="quiz-form-5">
+                        <label>
+                            <input type="radio" name="correct" value="A">
+                            A) Wöchentliche Lernstunden.
+                        </label><br>
+                        <label>
+                            <input type="radio" name="correct" value="B">
+                            B) Anzahl der richtigen Antworten.
+                        </label><br>
+                        <label>
+                            <input type="radio" name="correct" value="C">
+                            C) Bestanden oder nicht bestanden.
+                        </label><br>
+                        <br>
+                        <button class="button"  type="button" onclick="checkAnswerSlide5()">Senden</button>
+                    </form>
+                    <br>
+                    <p id="feedback-5" style="display:none;"></p>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h2>
+                        Da unser Ziel darin besteht, ein Modell zu erstellen, das vorhersagen kann, wie viele Antworten die Studierenden im Abschlusstest richtig beantworten werden, basierend auf der Anzahl der Lernstunden,                       
+                        <br>
+                        wie lautet dann unsere Beschriftung?
+                    </h2>
+                    <form id="quiz-form-6">
+                        <label>
+                            <input type="radio" name="solution" value="A">
+                            A) Wöchentliche Lernstunden.
+                        </label><br>
+                        <label>
+                            <input type="radio" name="solution" value="B">
+                            B) Anzahl der richtigen Antworten.
+                        </label><br>
+                        <label>
+                            <input type="radio" name="solution" value="C">
+                            C) Bestanden oder nicht bestanden.
+                        </label><br>
+                        <br>
+                        <button class="button" type="button" onclick="checkAnswerSlide6()">Senden</button>
+                    </form>
+                    <br>
+                    <p id="feedback-6" style="display:none;"></p>
+                </div>
+            </div>
+
+
+            <div class="slide">
+                <div class="image-section">
+                    <img src="Joao1.png" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h2>
+                        Verwenden wir also unsere von João gesammelten und mit einer Beschriftung versehenen Daten von früheren Studierenden und den überwachten Lernalgorithmus der linearen Regression, um ein Vorhersagemodell zu trainieren. 
+                    </h2>
+                    <br>
+                    <h2>
+                        Anschließend kann João dieses Vorhersagemodell verwenden, um die Anzahl der richtigen Antworten vorherzusagen, die die Studierenden basierend auf ihren Lernstunden erzielen werden.
+                    </h2>
+                    <br>
+                    <h2>
+                        Trainieren wir also unser Modell.
+                    </h2>
+                </div>
+            </div>
+        
+            
+        </div>
+    </div>
+
+    <!-- Arrows (Prev and Next) -->
+    <a class="prev" id="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" id="next" onclick="changeSlide(1)">&#10095;</a>    
+
+    <script src="introduction.js"></script>
+</body>
+</html>
