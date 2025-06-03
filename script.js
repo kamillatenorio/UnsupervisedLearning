@@ -60,7 +60,7 @@ let dataPoints = [
 const k = 5; // Number of clusters
 let centroids = [];
 let clusters = [];
-const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF']; // Colors for clusters
+const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1']; // Stylish pastel colors
 
 document.getElementById('collectDataBtn').addEventListener('click', handleCollectData);
 
@@ -159,42 +159,57 @@ function drawDataPoints() {
         ctx.fill();
     });
 
-    // Draw centroids as "X"
+    // Draw centroids as larger, bolder "X"
     centroids.forEach((centroid, index) => {
         const x = 50 + (centroid.x - minX) * xStep;
         const y = height - 50 - (centroid.y - minY) * yStep;
         ctx.strokeStyle = colors[index];
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4; // Make the lines bolder
 
-        // Draw "X"
+        // Draw larger "X"
         ctx.beginPath();
-        ctx.moveTo(x - 5, y - 5); // Top-left to bottom-right
-        ctx.lineTo(x + 5, y + 5);
+        ctx.moveTo(x - 10, y - 10); // Top-left to bottom-right
+        ctx.lineTo(x + 10, y + 10);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(x - 5, y + 5); // Bottom-left to top-right
-        ctx.lineTo(x + 5, y - 5);
+        ctx.moveTo(x - 10, y + 10); // Bottom-left to top-right
+        ctx.lineTo(x + 10, y - 10);
         ctx.stroke();
     });
 }
 
 let currentIteration = 0; // Track the current iteration
-const maxIterations = 5; // Maximum number of iterations
+const maxIterations = 7; // Maximum number of iterations
 
 function handleCollectData() {
     phaseTitle.innerText = 'K-Means Clustering'; // Change title
     clusters = []; // Clear any existing cluster assignments
     drawDataPoints(); // Draw all data points without clusters
+
+    // Add an introduction to K-Means
     controlsDiv.innerHTML = `
         <p>
-            Jetzt haben wir also die Daten. Sehen wir uns an, wie der K-Means-Algorithmus die Daten in Cluster gruppiert.
+            <strong>Was ist K-Means Clustering?</strong><br>
+            K-Means ist ein Algorithmus, der Datenpunkte in <strong>${k}</strong> Gruppen (Cluster) aufteilt. 
+            Der Algorithmus funktioniert in mehreren Schritten:
+        </p>
+        <ol>
+            <li>Wähle zufällig <strong>${k}</strong> Startpunkte (Zentroiden).</li>
+            <li>Weise jeden Datenpunkt dem nächstgelegenen Zentroiden zu.</li>
+            <li>Berechne die neuen Zentroiden als Mittelwert der Punkte in jedem Cluster.</li>
+            <li>Wiederhole die Schritte 2 und 3, bis sich die Zentroiden nicht mehr ändern oder die maximale Anzahl von Iterationen erreicht ist.</li>
+        </ol>
+        <p>
+            Klicke auf "Beginnen wir mit dem Clustering!", um den Algorithmus zu starten.
         </p>
         <br>
         <button class="button" id="startClusteringBtn">
             Beginnen wir mit dem Clustering!        
         </button>
     `;
+
+    // Add event listener to start clustering
     document.getElementById('startClusteringBtn').addEventListener('click', startClustering);
 }
 
@@ -214,8 +229,13 @@ function initializeCentroids() {
 }
 
 function setupIterationControls() {
+    // Explain the current step to the user
     controlsDiv.innerHTML = `
-        <p>Iteration ${currentIteration + 1} von ${maxIterations}</p>
+        <p>
+            <strong>Iteration ${currentIteration + 1} von ${maxIterations}</strong><br>
+            Jetzt werden die Datenpunkte den nächstgelegenen Zentroiden zugewiesen.
+            Klicke auf "Punkte zu Clustern zuweisen", um fortzufahren.
+        </p>
         <button class="button" id="assignClustersBtn">Punkte zu Clustern zuweisen</button>
     `;
 
@@ -229,7 +249,12 @@ function setupIterationControls() {
 }
 
 function showUpdateCentroidsButton() {
+    // Explain the next step to the user
     controlsDiv.innerHTML += `
+        <p>
+            Die Datenpunkte wurden den Clustern zugewiesen. Jetzt werden die Zentroiden basierend auf den zugewiesenen Punkten aktualisiert.
+            Klicke auf "Zentroiden aktualisieren", um fortzufahren.
+        </p>
         <button class="button" id="updateCentroidsBtn">Zentroiden aktualisieren</button>
     `;
 
@@ -242,7 +267,13 @@ function showUpdateCentroidsButton() {
         if (currentIteration < maxIterations) {
             setupIterationControls(); // Show the "Assign Points to Clusters" button for the next iteration
         } else {
-            controlsDiv.innerHTML = `<p>Clustering abgeschlossen! Die Daten wurden in ${k} Cluster gruppiert.</p>`;
+            controlsDiv.innerHTML = `
+                <p>
+                    <strong>Clustering abgeschlossen!</strong><br>
+                    Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
+                    Du kannst die Ergebnisse auf der Grafik sehen.
+                </p>
+            `;
         }
     });
 }
@@ -287,7 +318,13 @@ function updateCentroids() {
     if (currentIteration < maxIterations) {
         setupIterationControls();
     } else {
-        controlsDiv.innerHTML = `<p>Clustering abgeschlossen! Die Daten wurden in ${k} Cluster gruppiert.</p>`;
+        controlsDiv.innerHTML = `
+            <p>
+                <strong>Clustering abgeschlossen!</strong><br>
+                Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
+                Du kannst die Ergebnisse auf der Grafik sehen.
+            </p>
+        `;
     }
 }
 

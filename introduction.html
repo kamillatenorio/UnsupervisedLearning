@@ -13,45 +13,63 @@
             <!-- Slide 1 -->
             <div class="slide">
                 <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
+                    <img src="secondPage.jpeg" alt="StudentJoao">
                 </div>
                 <div class="text-section">
                     <h1>
                         Hallo! 
                     </h1>
-                    <h2>
-                        Ich bin João, ein Bachelor-Student.                  
-                    </h2>
                     <br>
                     <h2>
-                        Ich habe mich damit schwer getan, zu entscheiden, wie viele Stunden ich durchschnittlich pro Woche lernen sollte, um bei meiner Abschlussprüfung in Mathematik am Ende des Semesters eine hohe Anzahl richtiger Antworten zu haben.
+                        We are data scientists, and we work for a big online company that sells different products.            
                     </h2>
+                    <br>
                 </div>
             </div>
 
             <!-- Slide 2 -->
             <div class="slide">
                 <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
+                    <img src="secondPage.jpeg" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <p>
+                        Our company wants to offer personalised advertisements to customers based on their characteristics.
+                    </p>
+                    <br>
+                    <p>They’ve given me a dataset with unlabeled information – specifically, each customer's annual income and a spending score, which the store assigns based on customer behavior and spending habits.</p>
+                    <br>
+                    <p>My job is to understand these customers and separate them into different groups based on similar characteristics. Once I’ve identified these groups, I’ll share the results with the marketing team so they can develop targeted advertising strategies for each group.</p>
+                </div>
+            </div>
+
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="secondPage.jpeg" alt="StudentJoao">
                 </div>
                 <div class="text-section">
                     <h2>
-                        Wie können wir João helfen?
-                        <br>„Daten von früheren Studierenden sammeln und ein Modell erstellen, das die Anzahl der richtigen Antworten basierend auf der Anzahl der Lernstunden vorhersagen kann.“
+                        Considering the objective, what is the most appropriate approach to follow to use this unlabeled data provided by the company?
                     </h2>
                     <form id="quiz-form-2">
                         <label>
                             <input type="radio" name="answer" value="A">
-                            A) Wahr
+                            A)  Apply unsupervised learning algorithm to group customers based on similarities.
                         </label><br>
                         <label>
                             <input type="radio" name="answer" value="B">
-                            B) Falsch
+                            B) Use a supervised learning algorithm to predict labels from income and spending score.
                         </label><br>
-                        <!--<label>
+                        <label>
                             <input type="radio" name="answer" value="C">
-                            C) João vorschlagen, häufig Pausen einzulegen und mehr Zeit mit Hobbys zu verbringen, anstatt zu lernen.
-                        </label><br>-->
+                            C) Add fake labels to the data to enable supervised classification.
+                        </label><br>
+                        <label>
+                            <input type="radio" name="answer" value="B">
+                            D) Use a reinforcement learning algorithm to maximize customer engagement through trial-and-error.
+                        </label><br>
                         <br>
                         <button class="button" type="button" onclick="checkAnswerSlide2()">Senden</button>
                     </form>
@@ -60,113 +78,32 @@
                 </div>
             </div>
 
-            <!-- Slide 3 -->
-            <div class="slide">
-                <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
-                </div>
-                <div class="text-section">
-                    <p>
-                        Super!
-                    </p>
-                    <br>
-                    <p>
-                        Ich werde also einige Studierende aus früheren Semestern befragen, wie viele Stunden sie im Durchschnitt pro Woche im Semester gelernt haben und wie viele richtige Antworten sie im Abschlusstest hatten.
-                        <br>
-                    </p>
-                </div>
-            </div>
-
             <!-- Slide 4 -->
             <div class="slide">
                 <div class="text-section">
                     <h2>
-                        Hier sind einige Ergebnisse meiner Befragung. Ich habe die gesammelten Daten in folgendem Tabellenformat organisiert:
+                        Because we do not have any labels in the dataset, and since our goal is to cluster customers into different groups based on their similarities, we’ll use an unsupervised learning algorithm to analyze this data.
                     </h2>
                 </div>
                 <div class="image-section">
-                    <img src="Dataset.svg" alt="Student Dataset" style="width: 400px; height: auto;">
+                    <img src="secondPage.jpeg" alt="Student Dataset" style="width: 400px; height: auto;">
                 </div>
             </div>
 
-            <!-- Slide 5 -->
-            <div class="slide">
-                <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
-                </div>
-                <div class="text-section">
-                    <h2>Unser Ziel ist es, ein Modell zu erstellen, das die Anzahl der richtigen Antworten in Abhängigkeit von den investierten Lernstunden vorhersagen kann.
-                            <br> Was ist hier das zentrale Merkmal?     
-                    </h2>
-                    <form id="quiz-form-5">
-                        <label>
-                            <input type="radio" name="correct" value="A">
-                            A) Wöchentliche Lernstunden.
-                        </label><br>
-                        <label>
-                            <input type="radio" name="correct" value="B">
-                            B) Anzahl der richtigen Antworten.
-                        </label><br>
-                        <label>
-                            <input type="radio" name="correct" value="C">
-                            C) Bestanden oder nicht bestanden.
-                        </label><br>
-                        <br>
-                        <button class="button"  type="button" onclick="checkAnswerSlide5()">Senden</button>
-                    </form>
-                    <br>
-                    <p id="feedback-5" style="display:none;"></p>
-                </div>
-            </div>
+           
 
             <!-- Slide 6 -->
             <div class="slide">
                 <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
+                    <img src="secondPage.jpeg" alt="StudentJoao">
                 </div>
                 <div class="text-section">
                     <h2>
-                        Da unser Ziel darin besteht, ein Modell zu erstellen, das vorhersagen kann, wie viele Antworten die Studierenden im Abschlusstest richtig beantworten werden, basierend auf der Anzahl der Lernstunden,                       
-                        <br>
-                        wie lautet dann unsere Beschriftung?
-                    </h2>
-                    <form id="quiz-form-6">
-                        <label>
-                            <input type="radio" name="solution" value="A">
-                            A) Wöchentliche Lernstunden.
-                        </label><br>
-                        <label>
-                            <input type="radio" name="solution" value="B">
-                            B) Anzahl der richtigen Antworten.
-                        </label><br>
-                        <label>
-                            <input type="radio" name="solution" value="C">
-                            C) Bestanden oder nicht bestanden.
-                        </label><br>
-                        <br>
-                        <button class="button" type="button" onclick="checkAnswerSlide6()">Senden</button>
-                    </form>
-                    <br>
-                    <p id="feedback-6" style="display:none;"></p>
-                </div>
-            </div>
-
-
-            <div class="slide">
-                <div class="image-section">
-                    <img src="Joao1.png" alt="StudentJoao">
-                </div>
-                <div class="text-section">
-                    <h2>
-                        Verwenden wir also unsere von João gesammelten und mit einer Beschriftung versehenen Daten von früheren Studierenden und den überwachten Lernalgorithmus der linearen Regression, um ein Vorhersagemodell zu trainieren. 
+                        More specifically, we will use a popular unsupervised learning algorithm called K-means clustering.
                     </h2>
                     <br>
                     <h2>
-                        Anschließend kann João dieses Vorhersagemodell verwenden, um die Anzahl der richtigen Antworten vorherzusagen, die die Studierenden basierend auf ihren Lernstunden erzielen werden.
-                    </h2>
-                    <br>
-                    <h2>
-                        Trainieren wir also unser Modell.
+                        So, let's dive into the K-means clustering algorithm and see how it works!
                     </h2>
                 </div>
             </div>
