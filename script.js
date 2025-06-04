@@ -234,8 +234,8 @@ function setupIterationControls() {
     // Clear the controlsDiv and add the message first
     const message = document.createElement('p');
     message.innerHTML = `
-        Now the algorithm will assign each data point to the nearest centroid.<br>
-        Click on "Assign Points to Clusters" to proceed with this step.
+        Jetzt wird der Algorithmus jeden Datenpunkt dem nächstgelegenen Zentrum zuweisen.<br>
+        Klicke auf "Punkte zu Clustern zuweisen", um mit diesem Schritt fortzufahren.
     `;
     controlsDiv.innerHTML = ''; // Clear previous content
     controlsDiv.appendChild(message); // Add the message
@@ -260,7 +260,7 @@ function showUpdateCentroidsButton() {
     const message = document.createElement('p');
     message.innerHTML = `
         Die Datenpunkte wurden den Clustern zugewiesen.<br>
-        Now the algorithm will calculate the new centroids as the average of the points in each cluster.<br>
+        Jetzt wird der Algorithmus die neuen Zentroiden berechnen, indem der Durchschnitt der Punkte in jedem Cluster genommen wird.<br>
         Klicke auf "Zentroiden aktualisieren", um fortzufahren.<br>
     `;
     controlsDiv.innerHTML = ''; // Clear previous content
@@ -282,7 +282,19 @@ function showUpdateCentroidsButton() {
             setupIterationControls(); // Show the "Assign Points to Clusters" button for the next iteration
         } else {
             controlsDiv.innerHTML = `
+                <p>
+                    <strong>Clustering abgeschlossen!</strong><br>
+                    Die Daten wurden in <strong>${k}</strong> Cluster gruppiert.<br>
+                    Du kannst die Ergebnisse auf der Grafik sehen.
+                </p>
+                <br>
+                <button class="button" id="finishBtn">Fertig</button>
             `;
+
+            // Add event listener to the "Finish" button
+            document.getElementById('finishBtn').addEventListener('click', () => {
+                window.location.href = 'end.html'; // Redirect to end.html
+            });
         }
     });
 }
@@ -327,36 +339,7 @@ function updateCentroids() {
     if (currentIteration < maxIterations) {
         setupIterationControls();
     } else {
-        console.log('Adding final message and Finish button...'); // Debugging log
-
-        // Add the final message above the canvas
-        const finalMessage = document.createElement('p');
-        finalMessage.innerHTML = `
-            <strong>Clustering abgeschlossen!</strong><br>
-            Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
-            Du kannst die Ergebnisse auf der Grafik sehen.
-        `;
-        canvas.parentNode.insertBefore(finalMessage, canvas.nextSibling); // Add the message below the canvas
-
-        console.log('Creating Finish button...');
-        const finishBtn = document.createElement('button');
-        finishBtn.className = 'button';
-        finishBtn.id = 'finishBtn';
-        finishBtn.textContent = 'Finish';
-        canvas.parentNode.insertBefore(finishBtn, finalMessage.nextSibling); // Add the "Finish" button below the message
-
-        // Force layout update
-        finishBtn.style.display = 'block';
-        finishBtn.style.visibility = 'visible';
-
-        console.log('Finish button added below the canvas');
-        console.log('Canvas dimensions:', canvas.offsetWidth, canvas.offsetHeight);
-        console.log('Finish button dimensions:', finishBtn.offsetWidth, finishBtn.offsetHeight);
-
-        finishBtn.addEventListener('click', () => {
-            console.log('Redirecting to end.html...'); // Debugging log
-            window.location.href = 'end.html'; // Redirect to end.html
-        });
+        
     }
 }
 
