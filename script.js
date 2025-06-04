@@ -261,7 +261,7 @@ function showUpdateCentroidsButton() {
     message.innerHTML = `
         Die Datenpunkte wurden den Clustern zugewiesen.<br>
         Now the algorithm will calculate the new centroids as the average of the points in each cluster.<br>
-        Klicke auf "Zentroiden aktualisieren", um fortzufahren.
+        Klicke auf "Zentroiden aktualisieren", um fortzufahren.<br>
     `;
     controlsDiv.innerHTML = ''; // Clear previous content
     controlsDiv.appendChild(message); // Add the message
@@ -282,11 +282,6 @@ function showUpdateCentroidsButton() {
             setupIterationControls(); // Show the "Assign Points to Clusters" button for the next iteration
         } else {
             controlsDiv.innerHTML = `
-                <p>
-                    <strong>Clustering abgeschlossen!</strong><br>
-                    Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
-                    Du kannst die Ergebnisse auf der Grafik sehen.
-                </p>
             `;
         }
     });
@@ -332,13 +327,36 @@ function updateCentroids() {
     if (currentIteration < maxIterations) {
         setupIterationControls();
     } else {
-        controlsDiv.innerHTML = `
-            <p>
-                <strong>Clustering abgeschlossen!</strong><br>
-                Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
-                Du kannst die Ergebnisse auf der Grafik sehen.
-            </p>
+        console.log('Adding final message and Finish button...'); // Debugging log
+
+        // Add the final message above the canvas
+        const finalMessage = document.createElement('p');
+        finalMessage.innerHTML = `
+            <strong>Clustering abgeschlossen!</strong><br>
+            Die Daten wurden in <strong>${k}</strong> Cluster gruppiert. 
+            Du kannst die Ergebnisse auf der Grafik sehen.
         `;
+        canvas.parentNode.insertBefore(finalMessage, canvas.nextSibling); // Add the message below the canvas
+
+        console.log('Creating Finish button...');
+        const finishBtn = document.createElement('button');
+        finishBtn.className = 'button';
+        finishBtn.id = 'finishBtn';
+        finishBtn.textContent = 'Finish';
+        canvas.parentNode.insertBefore(finishBtn, finalMessage.nextSibling); // Add the "Finish" button below the message
+
+        // Force layout update
+        finishBtn.style.display = 'block';
+        finishBtn.style.visibility = 'visible';
+
+        console.log('Finish button added below the canvas');
+        console.log('Canvas dimensions:', canvas.offsetWidth, canvas.offsetHeight);
+        console.log('Finish button dimensions:', finishBtn.offsetWidth, finishBtn.offsetHeight);
+
+        finishBtn.addEventListener('click', () => {
+            console.log('Redirecting to end.html...'); // Debugging log
+            window.location.href = 'end.html'; // Redirect to end.html
+        });
     }
 }
 
