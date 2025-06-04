@@ -219,12 +219,15 @@ function startClustering() {
 }
 
 function initializeCentroids() {
-    centroids = [];
-    for (let i = 0; i < k; i++) {
-        const randomPoint = dataPoints[Math.floor(Math.random() * dataPoints.length)];
-        centroids.push({ x: randomPoint.x, y: randomPoint.y });
-    }
-    drawDataPoints();
+    centroids = [
+        { x: 20, y: 110 }, // Cluster 1
+        { x: 60, y: 80 },  // Cluster 2
+        { x: 120, y: 10 }, // Cluster 3
+        { x: 140, y: 130 }, // Cluster 4
+        { x: 15, y: 20 }   // Cluster 5
+    ];
+
+    drawDataPoints(); 
 }
 
 function setupIterationControls() {
