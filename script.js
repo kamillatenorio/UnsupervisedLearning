@@ -128,7 +128,7 @@ function drawAxes() {
     ctx.save();
     ctx.translate(10, height / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Spending Score', -50, 0);
+    ctx.fillText('Spending Score (1-100)', -50, 0);
     ctx.restore();
 }
 
