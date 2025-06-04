@@ -122,13 +122,13 @@ function drawAxes() {
     }
 
     // Draw x-axis label
-    ctx.fillText('Annual Income', width / 2 - 30, height - 10);
+    ctx.fillText('Jahreseinkommen (Annual Income)', width / 2 - 30, height - 10);
 
     // Draw y-axis label
     ctx.save();
     ctx.translate(10, height / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Spending Score (1-100)', -50, 0);
+    ctx.fillText('Ausgabenscore (Spending Score)', -50, 0);
     ctx.restore();
 }
 
@@ -195,16 +195,17 @@ function handleCollectData() {
     // Add an introduction to K-Means
     controlsDiv.innerHTML = `
         <p>
-            First, we need to define how many clusters we want to create.<br>
-            In this example, we will use <strong>${k}</strong> clusters.<br>
-            Then, the algorithm randomly selects <strong>${k}</strong> initial centroids from the data points.
+            Wir sehen in der Grafik nun also die einzelnen Kunden als Datenpunkte repräsentiert.
+            <br>
+            Zuerst müssen wir festlegen, wie viele Cluster wir erstellen möchten. In diesem Beispiel entscheiden wir uns für <strong>fünf</strong> Cluster.<br>
+            Anschließend wählt der Algorithmus zufällig fünf sogenannte Start-Zentroiden. Ein Zentroid soll im Zentrum eines Clusters liegen.<br>
         </p>
         <p>
-            Klicke auf "Select the centroids", um die Zentroiden auszuwählen und das Clustering zu starten.
+            Klicke auf „Zentroiden auswählen“, um die Startpunkte festzulegen und das Clustering zu beginnen.
         </p>
         <br>
         <button class="button" id="startClusteringBtn">
-            Select the centroids        
+            Zentroiden auswählen  
         </button>
     `;
 
@@ -234,8 +235,11 @@ function setupIterationControls() {
     // Clear the controlsDiv and add the message first
     const message = document.createElement('p');
     message.innerHTML = `
-        Jetzt wird der Algorithmus jeden Datenpunkt dem nächstgelegenen Zentrum zuweisen.<br>
-        Klicke auf "Punkte zu Clustern zuweisen", um mit diesem Schritt fortzufahren.
+        Jetzt wird der Algorithmus jeden Datenpunkt dem nächstgelegenen Zentroiden zuweisen.
+        <br>
+        <i>Im Folgenden werden diese Schritte mehrmals wiederholt, um die Cluster zu perfektionieren.</i>
+        <br>
+        Klicke auf "Punkte zu Clustern zuweisen", um mit diesem Schritt fortzufahren. 
     `;
     controlsDiv.innerHTML = ''; // Clear previous content
     controlsDiv.appendChild(message); // Add the message
@@ -260,7 +264,11 @@ function showUpdateCentroidsButton() {
     const message = document.createElement('p');
     message.innerHTML = `
         Die Datenpunkte wurden den Clustern zugewiesen.<br>
-        Jetzt wird der Algorithmus die neuen Zentroiden berechnen, indem der Durchschnitt der Punkte in jedem Cluster genommen wird.<br>
+        Jetzt wird der Algorithmus die neuen Zentroiden berechnen, indem der Durchschnitt der Punkte in jedem Cluster genommen wird. Es wird also jeweils der Mittelwert aus allen x- und y-Koordinaten der Punkte in einem Cluster  genommen und daraus die Koordinaten des neuen Zentroiden berechnet.
+        <i>
+        Daher hat der Algorithmus auch seinen Namen: K-means für Englisch: Means = Mittelwerte.
+        </i>
+        <br>
         Klicke auf "Zentroiden aktualisieren", um fortzufahren.<br>
     `;
     controlsDiv.innerHTML = ''; // Clear previous content
