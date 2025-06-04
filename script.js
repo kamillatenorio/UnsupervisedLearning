@@ -159,7 +159,7 @@ function drawDataPoints() {
         ctx.fill();
     });
 
-    // Draw centroids as larger, bolder "X"
+    // Draw centroids as larger, bolder "X" and add labels
     centroids.forEach((centroid, index) => {
         const x = 50 + (centroid.x - minX) * xStep;
         const y = height - 50 - (centroid.y - minY) * yStep;
@@ -176,6 +176,11 @@ function drawDataPoints() {
         ctx.moveTo(x - 10, y + 10); // Bottom-left to top-right
         ctx.lineTo(x + 10, y - 10);
         ctx.stroke();
+
+        // Add cluster label near the centroid
+        ctx.fillStyle = 'black'; // Label color
+        ctx.font = '14px Arial'; // Label font
+        ctx.fillText(`Cluster ${index + 1}`, x + 15, y - 15); // Position label near the centroid
     });
 }
 
@@ -190,22 +195,16 @@ function handleCollectData() {
     // Add an introduction to K-Means
     controlsDiv.innerHTML = `
         <p>
-            <strong>Was ist K-Means Clustering?</strong><br>
-            K-Means ist ein Algorithmus, der Datenpunkte in <strong>${k}</strong> Gruppen (Cluster) aufteilt. 
-            Der Algorithmus funktioniert in mehreren Schritten:
+            First, we need to define how many clusters we want to create.<br>
+            In this example, we will use <strong>${k}</strong> clusters.<br>
+            Then, the algorithm randomly selects <strong>${k}</strong> initial centroids from the data points.
         </p>
-        <ol>
-            <li>Wähle zufällig <strong>${k}</strong> Startpunkte (Zentroiden).</li>
-            <li>Weise jeden Datenpunkt dem nächstgelegenen Zentroiden zu.</li>
-            <li>Berechne die neuen Zentroiden als Mittelwert der Punkte in jedem Cluster.</li>
-            <li>Wiederhole die Schritte 2 und 3, bis sich die Zentroiden nicht mehr ändern oder die maximale Anzahl von Iterationen erreicht ist.</li>
-        </ol>
         <p>
-            Klicke auf "Beginnen wir mit dem Clustering!", um den Algorithmus zu starten.
+            Klicke auf "Select the centroids", um die Zentroiden auszuwählen und das Clustering zu starten.
         </p>
         <br>
         <button class="button" id="startClusteringBtn">
-            Beginnen wir mit dem Clustering!        
+            Select the centroids        
         </button>
     `;
 
@@ -229,40 +228,52 @@ function initializeCentroids() {
 }
 
 function setupIterationControls() {
-    // Explain the current step to the user
-    controlsDiv.innerHTML = `
-        <p>
-            <strong>Iteration ${currentIteration + 1} von ${maxIterations}</strong><br>
-            Jetzt werden die Datenpunkte den nächstgelegenen Zentroiden zugewiesen.
-            Klicke auf "Punkte zu Clustern zuweisen", um fortzufahren.
-        </p>
-        <button class="button" id="assignClustersBtn">Punkte zu Clustern zuweisen</button>
+    // Clear the controlsDiv and add the message first
+    const message = document.createElement('p');
+    message.innerHTML = `
+        Now the algorithm will assign each data point to the nearest centroid.<br>
+        Click on "Assign Points to Clusters" to proceed with this step.
     `;
+    controlsDiv.innerHTML = ''; // Clear previous content
+    controlsDiv.appendChild(message); // Add the message
 
-    const assignClustersBtn = document.getElementById('assignClustersBtn');
+    // Add the "Assign Points to Clusters" button below the message
+    const assignClustersBtn = document.createElement('button');
+    assignClustersBtn.className = 'button';
+    assignClustersBtn.id = 'assignClustersBtn';
+    assignClustersBtn.textContent = 'Punkte zu Clustern zuweisen';
+    controlsDiv.appendChild(assignClustersBtn);
 
+    // Add event listener for the button
     assignClustersBtn.addEventListener('click', () => {
         assignClusters();
-        assignClustersBtn.remove(); // Remove the "Assign Points to Clusters" button
+        assignClustersBtn.remove(); // Remove the button after clicking
         showUpdateCentroidsButton(); // Show the "Update Centroids" button
     });
 }
 
 function showUpdateCentroidsButton() {
-    // Explain the next step to the user
-    controlsDiv.innerHTML += `
-        <p>
-            Die Datenpunkte wurden den Clustern zugewiesen. Jetzt werden die Zentroiden basierend auf den zugewiesenen Punkten aktualisiert.
-            Klicke auf "Zentroiden aktualisieren", um fortzufahren.
-        </p>
-        <button class="button" id="updateCentroidsBtn">Zentroiden aktualisieren</button>
+    // Clear the controlsDiv and add the message first
+    const message = document.createElement('p');
+    message.innerHTML = `
+        Die Datenpunkte wurden den Clustern zugewiesen.<br>
+        Now the algorithm will calculate the new centroids as the average of the points in each cluster.<br>
+        Klicke auf "Zentroiden aktualisieren", um fortzufahren.
     `;
+    controlsDiv.innerHTML = ''; // Clear previous content
+    controlsDiv.appendChild(message); // Add the message
 
-    const updateCentroidsBtn = document.getElementById('updateCentroidsBtn');
+    // Add the "Update Centroids" button below the message
+    const updateCentroidsBtn = document.createElement('button');
+    updateCentroidsBtn.className = 'button';
+    updateCentroidsBtn.id = 'updateCentroidsBtn';
+    updateCentroidsBtn.textContent = 'Zentroiden aktualisieren';
+    controlsDiv.appendChild(updateCentroidsBtn);
 
+    // Add event listener for the button
     updateCentroidsBtn.addEventListener('click', () => {
         updateCentroids();
-        updateCentroidsBtn.remove(); // Remove the "Update Centroids" button
+        updateCentroidsBtn.remove(); // Remove the button after clicking
 
         if (currentIteration < maxIterations) {
             setupIterationControls(); // Show the "Assign Points to Clusters" button for the next iteration
