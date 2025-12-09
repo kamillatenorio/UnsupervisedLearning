@@ -191,7 +191,8 @@ let progressBar = null;
 
 function createProgressBar() {
     // Remove any existing progress bar
-    const container = document.getElementById('progressBars');
+    const container = document.getElementById('progressBarContainer');
+    if (!container) return;
     container.innerHTML = '';
     // Create a new progress bar
     progressBar = new ProgressBar.Line(container, {
@@ -215,11 +216,11 @@ function createProgressBar() {
         from: {color: '#FF6F61'},
         to: {color: '#88B04B'},
         step: (state, bar) => {
-            bar.setText(``);
+            bar.setText('');
         }
     });
     progressBar.set(0);
-    progressBar.setText(``);
+    progressBar.setText('');
 }
 
 function handleCollectData() {
