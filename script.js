@@ -200,7 +200,7 @@ function createProgressBar() {
         color: '#6B5B95',
         trailColor: '#eee',
         trailWidth: 4,
-        svgStyle: {width: '100%', height: '30px'},
+        svgStyle: {width: '100%', height: '30px', borderRadius: '8px'},
         text: {
             style: {
                 color: '#333',
@@ -217,6 +217,12 @@ function createProgressBar() {
         to: {color: '#88B04B'},
         step: (state, bar) => {
             bar.setText('');
+            if (bar.path) {
+                bar.path.setAttribute('stroke-linecap', 'round');
+            }
+            if (bar.trail) {
+                bar.trail.setAttribute('stroke-linecap', 'round');
+            }
         }
     });
     progressBar.set(0);
