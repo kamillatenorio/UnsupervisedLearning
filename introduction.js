@@ -30,13 +30,20 @@ function showSlide(index) {
 
     // Check if it's the last slide
     if (currentSlideIndex === slides.length - 1) {
-        nextArrow.textContent = "-›"; // Change Next button text
-        nextArrow.onclick = () => {
-            window.location.href = "game.html"; // Redirect to game.html when clicked
-        };
+        // For end.html, hide the next arrow on the last slide
+        if (window.location.pathname.endsWith('end.html')) {
+            nextArrow.style.display = 'none';
+        } else {
+            nextArrow.textContent = "-›"; // Change Next button text
+            nextArrow.onclick = () => {
+                window.location.href = "game.html"; // Redirect to game.html when clicked
+            };
+            nextArrow.style.display = 'block';
+        }
     } else {
         nextArrow.textContent = "›"; // Restore the default Next arrow
         nextArrow.onclick = () => changeSlide(1); // Continue to the next slide
+        nextArrow.style.display = 'block';
     }
 }
 

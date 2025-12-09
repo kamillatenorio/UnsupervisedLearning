@@ -21,16 +21,78 @@
                     </h2>
                     <br>
                     <h3>
-                        Indem wir diese Erkenntnisse verstehen, kann das Unternehmen seine Strategien für jede Gruppe optimieren. Diese Informationen dienen als wertvolle Orientierungshilfe für das Marketing-Team, um effektive Kampagnen und Werbestrategien zu entwickeln, die die Kundenbindung verbessern und das Umsatzwachstum in der Zukunft fördern.                    
+                        Indem wir diese Erkenntnisse verstehen, kann das Unternehmen seine Strategien für jede Gruppe optimieren. 
                     </h3>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="image-section">
+                    <img src="secondPage.jpeg" alt="StudentJoao">
+                </div>
+                <div class="text-section">
+                    <h2>
+                        Diese Informationen dienen als wertvolle Orientierungshilfe für das Marketing-Team, um effektive Kampagnen und Werbestrategien zu entwickeln, die die Kundenbindung verbessern und das Umsatzwachstum in der Zukunft fördern.     
+                    </h2>
+                    <br>
+                    <h2>
+                         Zum Beispiel sind die Cluster, die Personen mit sowohl hohen Ausgabewerten als auch hohen Jahreseinkommen zusammenfassen, besonders geeignet, um teure Produkte zu bewerben.                    
+                    </h2>
                     <br>
                 </div>
             </div>
-            
-        </div>
-    </div>
 
 
     <script src="introduction.js"></script>
+
+    <script>
+    // Override next/prev arrow logic for end.html
+    document.addEventListener('DOMContentLoaded', function() {
+        const nextArrow = document.getElementById('next');
+        const prevArrow = document.getElementById('prev');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlideIndex = 0;
+        function showSlide(index) {
+            if (index >= slides.length) {
+                currentSlideIndex = slides.length - 1;
+            } else if (index < 0) {
+                currentSlideIndex = 0;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides.forEach((slide) => {
+                slide.style.display = 'none';
+            });
+            slides[currentSlideIndex].style.display = 'flex';
+            // Hide next arrow on last slide
+            if (currentSlideIndex === slides.length - 1) {
+                nextArrow.style.display = 'none';
+            } else {
+                nextArrow.style.display = 'block';
+            }
+            // On first slide, prev arrow redirects to game.html
+            if (currentSlideIndex === 0) {
+                prevArrow.onclick = function() {
+                    window.location.href = 'game.html';
+                };
+            } else {
+                prevArrow.onclick = function() {
+                    showSlide(currentSlideIndex - 1);
+                };
+            }
+        }
+        window.changeSlide = function(step) {
+            showSlide(currentSlideIndex + step);
+        };
+        showSlide(currentSlideIndex);
+    });
+    </script>
+
+    <!-- Next Arrow -->
+    <!-- Arrows (Prev and Next) -->
+    <a class="prev" id="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" id="next" onclick="changeSlide(1)">&#10095;</a>
+
 </body>
 </html>
