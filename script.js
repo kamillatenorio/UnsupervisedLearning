@@ -187,6 +187,41 @@ function drawDataPoints() {
 let currentIteration = 0; // Track the current iteration
 const maxIterations = 7; // Maximum number of iterations
 
+let progressBar = null;
+
+function createProgressBar() {
+    // Remove any existing progress bar
+    const container = document.getElementById('progressBars');
+    container.innerHTML = '';
+    // Create a new progress bar
+    progressBar = new ProgressBar.Line(container, {
+        strokeWidth: 4,
+        color: '#6B5B95',
+        trailColor: '#eee',
+        trailWidth: 4,
+        svgStyle: {width: '100%', height: '30px'},
+        text: {
+            style: {
+                color: '#333',
+                position: 'absolute',
+                right: '0',
+                top: '30px',
+                padding: 0,
+                margin: 0,
+                transform: null
+            },
+            autoStyleContainer: false
+        },
+        from: {color: '#FF6F61'},
+        to: {color: '#88B04B'},
+        step: (state, bar) => {
+            bar.setText(``);
+        }
+    });
+    progressBar.set(0);
+    progressBar.setText(``);
+}
+
 function handleCollectData() {
     phaseTitle.innerText = 'K-Means Clustering'; // Change title
     clusters = []; // Clear any existing cluster assignments
@@ -216,6 +251,7 @@ function handleCollectData() {
 function startClustering() {
     currentIteration = 0; // Reset iteration counter
     initializeCentroids();
+    createProgressBar();
     setupIterationControls();
 }
 
@@ -254,6 +290,14 @@ function setupIterationControls() {
     // Add event listener for the button
     assignClustersBtn.addEventListener('click', () => {
         assignClusters();
+        // Update progress bar
+        currentIteration++;
+        if (progressBar) {
+            progressBar.animate(currentIteration / maxIterations, {
+                duration: 500
+            });
+            progressBar.setText(`Iteration ${currentIteration} of ${maxIterations}`);
+        }
         assignClustersBtn.remove(); // Remove the button after clicking
         showUpdateCentroidsButton(); // Show the "Update Centroids" button
     });
