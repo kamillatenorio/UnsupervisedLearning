@@ -335,7 +335,7 @@ function showUpdateCentroidsButton() {
         } else {
             controlsDiv.innerHTML = `
                 <p>
-                    <strong>Clustering abgeschlossen!</strong><br>
+                    <strong>Die Clusterbildung ist abgeschlossen, da sich die Zentren stabilisiert haben oder die von den Datenwissenschaftlern festgelegte maximale Anzahl an Iterationen erreicht wurde.</strong><br>
                     Die Daten wurden in <strong>${k}</strong> Cluster gruppiert.<br>
                     Du kannst die Ergebnisse auf der Grafik sehen.
                 </p>
