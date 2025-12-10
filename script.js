@@ -60,6 +60,7 @@ let dataPoints = [
 const k = 5; // Number of clusters
 let centroids = [];
 let clusters = [];
+let prevClusters = [];
 const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1']; // Stylish pastel colors
 
 document.getElementById('collectDataBtn').addEventListener('click', handleCollectData);
@@ -185,7 +186,7 @@ function drawDataPoints() {
 }
 
 let currentIteration = 0; // Track the current iteration
-const maxIterations = 7; // Maximum number of iterations
+const maxIterations = 21; // Maximum number of iterations
 
 let progressBar = null;
 
@@ -234,44 +235,67 @@ function handleCollectData() {
     clusters = []; // Clear any existing cluster assignments
     drawDataPoints(); // Draw all data points without clusters
 
-    // Add an introduction to K-Means
+    // Add an introduction to K-Means and prompt for centroid selection
     controlsDiv.innerHTML = `
         <p>
-            Wir sehen in der Grafik nun also die einzelnen Kunden als Datenpunkte repräsentiert.
-            <br>
+            Wir sehen in der Grafik nun also die einzelnen Kunden als Datenpunkte repräsentiert.<br>
             Zuerst müssen wir festlegen, wie viele Cluster wir erstellen möchten. In diesem Beispiel entscheiden wir uns für <strong>fünf</strong> Cluster.<br>
-            Anschließend wählt der Algorithmus zufällig fünf sogenannte Start-Zentroiden. Ein Zentroid soll im Zentrum eines Clusters liegen.<br>
+            <strong>Klicke nun auf die Grafik, um die Startpositionen der fünf Zentroiden auszuwählen.</strong>
         </p>
-        <p>
-            Klicke auf „Zentroiden auswählen“, um die Startpunkte festzulegen und das Clustering zu beginnen.
-        </p>
-        <br>
-        <button class="button" id="startClusteringBtn">
-            Zentroiden auswählen  
-        </button>
+        <p id="centroidCountMsg">Noch zu wählende Zentroiden: <span id="centroidCount">5</span></p>
     `;
+    centroids = [];
+    drawDataPoints();
+    let selectingCentroids = true;
+    let centroidClicks = 0;
+    const kCentroids = k;
+    const centroidCountSpan = document.getElementById('centroidCount');
 
-    // Add event listener to start clustering
-    document.getElementById('startClusteringBtn').addEventListener('click', startClustering);
+    function canvasClickHandler(event) {
+        if (!selectingCentroids) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        // Convert canvas coordinates to data coordinates
+        const dataX = Math.round((x - 50) * (150 / (canvas.width - 100)));
+        const dataY = Math.round(150 - ((y - 50) * (150 / (canvas.height - 100))));
+        centroids.push({ x: dataX, y: dataY });
+        centroidClicks++;
+        centroidCountSpan.textContent = kCentroids - centroidClicks;
+        drawDataPoints();
+        // Draw the just-placed centroid as a big X
+        ctx.save();
+        ctx.strokeStyle = colors[(centroidClicks-1)%colors.length];
+        ctx.lineWidth = 4;
+        const cx = 50 + (dataX) * ((canvas.width - 100) / 150);
+        const cy = canvas.height - 50 - (dataY) * ((canvas.height - 100) / 150);
+        ctx.beginPath();
+        ctx.moveTo(cx - 10, cy - 10);
+        ctx.lineTo(cx + 10, cy + 10);
+        ctx.moveTo(cx - 10, cy + 10);
+        ctx.lineTo(cx + 10, cy - 10);
+        ctx.stroke();
+        ctx.restore();
+        if (centroidClicks === kCentroids) {
+            selectingCentroids = false;
+            canvas.removeEventListener('click', canvasClickHandler);
+            controlsDiv.innerHTML += `<br><button class="button" id="startClusteringBtn">Clustering starten</button>`;
+            document.getElementById('startClusteringBtn').addEventListener('click', startClustering);
+        }
+    }
+    canvas.addEventListener('click', canvasClickHandler);
 }
 
 function startClustering() {
     currentIteration = 0; // Reset iteration counter
-    initializeCentroids();
+    // Do not re-initialize centroids, use user-selected ones
     createProgressBar();
     setupIterationControls();
 }
 
 function initializeCentroids() {
-    centroids = [
-        { x: 20, y: 110 }, // Cluster 1
-        { x: 60, y: 80 },  // Cluster 2
-        { x: 120, y: 10 }, // Cluster 3
-        { x: 140, y: 130 }, // Cluster 4
-        { x: 15, y: 20 }   // Cluster 5
-    ];
-
-    drawDataPoints(); 
+    // No longer used: centroids are set by user clicks
+    drawDataPoints();
 }
 
 function setupIterationControls() {
@@ -297,6 +321,18 @@ function setupIterationControls() {
     // Add event listener for the button
     assignClustersBtn.addEventListener('click', () => {
         assignClusters();
+        // Check for stabilization
+        let stabilized = true;
+        if (prevClusters.length === clusters.length && prevClusters.length > 0) {
+            for (let i = 0; i < clusters.length; i++) {
+                if (clusters[i] !== prevClusters[i]) {
+                    stabilized = false;
+                    break;
+                }
+            }
+        } else {
+            stabilized = false;
+        }
         // Update progress bar
         currentIteration++;
         if (progressBar) {
@@ -306,7 +342,27 @@ function setupIterationControls() {
             progressBar.setText(`Iteration ${currentIteration} of ${maxIterations}`);
         }
         assignClustersBtn.remove(); // Remove the button after clicking
-        showUpdateCentroidsButton(); // Show the "Update Centroids" button
+        if (stabilized) {
+            // Show finished message (exact text as requested)
+                if (progressBar) {
+                    progressBar.set(1);
+                    progressBar.setText('');
+                }
+                controlsDiv.innerHTML = `
+                    <p>
+                        <strong>Die Clusterbildung ist abgeschlossen, da sich die Zentren stabilisiert haben und keine Punkte mehr die Cluster wechseln.<br></strong>
+                        Die Daten wurden in <strong>5</strong> Cluster gruppiert.<br>
+                        Du kannst die Ergebnisse auf der Grafik sehen.
+                    </p>
+                    <br>
+                    <button class="button" id="finishBtn">Fertig</button>
+                `;
+                document.getElementById('finishBtn').addEventListener('click', () => {
+                    window.location.href = 'end.html';
+                });
+        } else {
+            showUpdateCentroidsButton(); // Show the "Update Centroids" button
+        }
     });
 }
 
@@ -359,10 +415,10 @@ function showUpdateCentroidsButton() {
 }
 
 function assignClusters() {
+    prevClusters = clusters.slice();
     clusters = dataPoints.map(point => {
         let minDistance = Infinity;
         let clusterIndex = -1;
-
         centroids.forEach((centroid, index) => {
             const distance = Math.sqrt(
                 Math.pow(point.x - centroid.x, 2) + Math.pow(point.y - centroid.y, 2)
@@ -372,7 +428,6 @@ function assignClusters() {
                 clusterIndex = index;
             }
         });
-
         return clusterIndex;
     });
 
