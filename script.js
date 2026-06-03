@@ -243,6 +243,8 @@ function handleCollectData() {
             <strong>Klicke nun auf die Grafik, um die Startpositionen der fünf Zentroiden auszuwählen.</strong>
         </p>
         <p id="centroidCountMsg">Noch zu wählende Zentroiden: <span id="centroidCount">5</span></p>
+        <br><br><i>(Im Gegensatz zur aktiven Auswahl in der Simulation werden die initialen Zentroiden in einem Algorithmus typischerweise zufällig initialisiert, da keine vorgegebenen Startpunkte verwendet werden.)</i>
+
     `;
     centroids = [];
     drawDataPoints();
