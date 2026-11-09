@@ -2,6 +2,7 @@ let currentSlideIndex = 0;
 const slides = document.querySelectorAll(".slide");
 const prevArrow = document.getElementById('prev');
 const nextArrow = document.getElementById('next');
+const isEndPage = window.location.pathname.endsWith('end.html');
 
 // Show the current slide based on index
 function showSlide(index) {
@@ -21,17 +22,19 @@ function showSlide(index) {
     // Show the current slide
     slides[currentSlideIndex].style.display = "flex";
 
-    // Hide the "Prev" arrow on the first slide
-    if (currentSlideIndex === 0) {
-        prevArrow.style.display = 'none';
-    } else {
-        prevArrow.style.display = 'block';
-    }
+    prevArrow.style.display = currentSlideIndex === 0 && !isEndPage ? 'none' : 'block';
+    prevArrow.onclick = () => {
+        if (currentSlideIndex === 0 && isEndPage) {
+            window.location.href = 'game.html';
+        } else {
+            changeSlide(-1);
+        }
+    };
 
     // Check if it's the last slide
     if (currentSlideIndex === slides.length - 1) {
         // For end.html, hide the next arrow on the last slide
-        if (window.location.pathname.endsWith('end.html')) {
+        if (isEndPage) {
             nextArrow.style.display = 'none';
         } else {
             nextArrow.textContent = "-›"; // Change Next button text
@@ -72,45 +75,5 @@ function checkAnswerSlide2() {
     } else {
         feedback4.innerHTML = `Falsch! Die richtige Antwort ist: <strong>"A"</strong>`;
         feedback4.style.display = "block";
-    }
-}
-
-function checkAnswerSlide5() {
-    const selectedAnswer = document.querySelector('input[name="correct"]:checked');
-    const feedback6 = document.getElementById('feedback-5'); // Ensure feedback element is selected
-
-    if (!selectedAnswer) {
-        feedback6.innerHTML = "Bitte wählen Sie eine Antwort aus!";
-        feedback6.style.display = "block";
-        return;
-    }
-
-    if (selectedAnswer.value === "A") {
-        feedback6.innerHTML = "Richtig! ";
-        feedback6.style.display = "block";
-        nextArrow.style.display = "block"; // Show the next arrow so they can continue
-    } else {
-        feedback6.innerHTML = "Falsch! Die richtige Antwort ist: <strong>A</strong>";
-        feedback6.style.display = "block";
-    }
-}
-
-function checkAnswerSlide6() {
-    const selectedAnswer = document.querySelector('input[name="solution"]:checked');
-    const feedback6 = document.getElementById('feedback-6'); // Ensure feedback element is selected
-
-    if (!selectedAnswer) {
-        feedback6.innerHTML = "Bitte wählen Sie eine Antwort aus!";
-        feedback6.style.display = "block";
-        return;
-    }
-
-    if (selectedAnswer.value === "B") {
-        feedback6.innerHTML = "Richtig! ";
-        feedback6.style.display = "block";
-        nextArrow.style.display = "block"; // Show the next arrow so they can continue
-    } else {
-        feedback6.innerHTML = "Falsch! Die richtige Antwort ist: <strong>B</strong>";
-        feedback6.style.display = "block";
     }
 }

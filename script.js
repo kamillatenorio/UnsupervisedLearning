@@ -1,7 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const controlsDiv = document.getElementById('controls');
-const predictionsDiv = document.getElementById('predictions');
 const phaseTitle = document.getElementById('phaseTitle');
 
 let dataPoints = [
@@ -64,10 +63,6 @@ let prevClusters = [];
 const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1']; // Stylish pastel colors
 
 document.getElementById('collectDataBtn').addEventListener('click', handleCollectData);
-
-// Load face image
-const faceImg = new Image();
-faceImg.src = 'face.png';
 
 function drawAxes() {
     const width = canvas.width;
@@ -295,11 +290,6 @@ function startClustering() {
     setupIterationControls();
 }
 
-function initializeCentroids() {
-    // No longer used: centroids are set by user clicks
-    drawDataPoints();
-}
-
 function setupIterationControls() {
     // Clear the controlsDiv and add the message first
     const message = document.createElement('p');
@@ -452,11 +442,6 @@ function updateCentroids() {
     drawDataPoints();
 
     currentIteration++;
-    if (currentIteration < maxIterations) {
-        setupIterationControls();
-    } else {
-        
-    }
 }
 
 // Initial draw when the page loads
